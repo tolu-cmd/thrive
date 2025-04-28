@@ -158,18 +158,19 @@ kubectl delete deployment hello-world-canary -n hello-world
 
 ### Prometheus
 
-Access Prometheus at:
+Access Prometheus at: http://ae9030e500cc648f78e825f4372fbccc-2050249566.us-east-1.elb.amazonaws.com/query
 
 ```
-http://<prometheus-service-url>
+
 ```
 
 ### Grafana
 
-Access Grafana at:
+Access Grafana at:http://a51f0e494f1f741b2ae34c30901d4f1c-191398344.us-east-1.elb.amazonaws.com/d/os6Bh8Omk/kubernetes-cluster?orgId=1&from=now-30m&to=now&timezone=browser&refresh=30s
 
 ```
 http://<grafana-service-url>
+
 ```
 
 - Username: admin
@@ -199,5 +200,3 @@ To use the CI/CD pipeline, you need to set up the following secrets in your GitH
 
 ## License
 
-MIT
-Testing CI/CD pipeline
