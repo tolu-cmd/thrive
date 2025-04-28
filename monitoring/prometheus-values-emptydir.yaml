@@ -1,0 +1,33 @@
+server:
+  persistentVolume:
+    enabled: false
+  emptyDir:
+    medium: ""
+
+  resources:
+    limits:
+      cpu: 200m  # Reduced for cost savings
+      memory: 256Mi  # Reduced for cost savings
+    requests:
+      cpu: 50m  # Reduced for cost savings
+      memory: 64Mi  # Reduced for cost savings
+
+alertmanager:
+  enabled: false
+
+nodeExporter:
+  enabled: true
+
+  resources:
+    limits:
+      cpu: 100m  # Reduced for cost savings
+      memory: 30Mi  # Reduced for cost savings
+    requests:
+      cpu: 50m  # Reduced for cost savings
+      memory: 20Mi  # Reduced for cost savings
+
+pushgateway:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: true

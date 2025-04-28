@@ -1,0 +1,15 @@
+cluster_endpoint = "https://EA716D60BBABC1F5886B677ACB203A4A.gr7.us-east-1.eks.amazonaws.com"
+cluster_id = "hello-world-eks"
+cluster_name = "hello-world-eks"
+cluster_security_group_id = "sg-0f5f8ee90783349f7"
+load_balancer_role_arn = "arn:aws:iam::738516368218:role/hello-world-eks-lb"
+private_subnets = [
+  "subnet-02020ad68bb4febf3",
+  "subnet-08c47117ca3a39194",
+]
+public_subnets = [
+  "subnet-05bf28e8c3d89824e",
+  "subnet-0c16fa4fd2cf06322",
+]
+region = "us-east-1"
+vpc_id = "vpc-0d0c687c3bd0cc285"

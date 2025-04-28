@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  namespace: hello-world
+  labels:
+    app: hello-world
+spec:
+  # Reduced replica count for cost savings
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: hello-world
+      annotations:
+        kubernetes.io/change-cause: "Initial deployment"
+    spec:
+      containers:
+      - name: hello-world
+        image: 826783599335.dkr.ecr.us-east-1.amazonaws.com/hello-world:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "200m"  # Reduced for cost savings
+            memory: "256Mi"  # Reduced for cost savings
+          requests:
+            cpu: "50m"  # Reduced for cost savings
+            memory: "64Mi"  # Reduced for cost savings
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+        env:
+        - name: PORT
+          value: "3000"

@@ -1,0 +1,52 @@
+adminPassword: admin
+
+persistence:
+  enabled: false
+  
+resources:
+  limits:
+    cpu: 100m  # Reduced for cost savings
+    memory: 128Mi  # Reduced for cost savings
+  requests:
+    cpu: 50m  # Reduced for cost savings
+    memory: 64Mi  # Reduced for cost savings
+
+service:
+  type: LoadBalancer
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server.monitoring.svc.cluster.local
+      access: proxy
+      isDefault: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    kubernetes-cluster:
+      gnetId: 7249
+      revision: 1
+      datasource: Prometheus
+    node-exporter:
+      gnetId: 1860
+      revision: 21
+      datasource: Prometheus
+    hello-world-app:
+      url: https://raw.githubusercontent.com/percona/grafana-dashboards/master/dashboards/Node_Instance_Summary.json
+      datasource: Prometheus
