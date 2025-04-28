@@ -9,6 +9,6 @@ resources:
   - service.yaml
   - hpa.yaml
 
-commonLabels:
+labels:
   app: hello-world
   environment: dev
