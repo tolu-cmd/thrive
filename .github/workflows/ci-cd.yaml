@@ -57,3 +57,38 @@ jobs:
         sleep 30
         SERVICE_URL=$(kubectl get svc hello-world -n hello-world -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
         curl -s $SERVICE_URL | grep "Hello World"
+
+    - name: Send success email
+      if: success()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Deployment Succeeded: ${{ github.repository }}"
+        body: |
+          Your CI/CD pipeline ran successfully on branch `${{ github.ref }}`.
+          Commit: ${{ github.sha }}
+          Repo: https://github.com/${{ github.repository }}
+        to: ${{ secrets.EMAIL_TO }}
+        from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+        secure: true
+
+    - name: Send failure email
+      if: failure()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Deployment Failed: ${{ github.repository }}"
+        body: |
+          The CI/CD pipeline failed on branch `${{ github.ref }}`.
+          Commit: ${{ github.sha }}
+          Repo: https://github.com/${{ github.repository }}
+          Please check the logs for more details.
+        to: ${{ secrets.EMAIL_TO }}
+        from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+        secure: true
